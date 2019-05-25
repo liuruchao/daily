@@ -112,4 +112,24 @@
     
   }
 
+  @media screen and (max-width:760px){
+    .journal{
+      .journal--banner{
+        width:90vw;
+      }
+      .journal__main{
+        flex-direction: column;
+        align-items: center;
+        .journal__main--intro{
+          width:90vw !important;
+          box-sizing: border-box;
+          margin-bottom:20px;
+        }
+        .journal__main--nav{
+          width:90vw !important;
+        }
+      }
+    }
+  }
+
 </style>

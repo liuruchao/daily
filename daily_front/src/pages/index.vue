@@ -1,15 +1,16 @@
 <template>
   <div class="home">
+    <!-- 页面上部分（轮播图，发表文章数，热门文章） -->
     <div class="home__banner">
-      <el-row :gutter="20" type="flex">
+      <el-row :gutter="20" type="flex" class="home__banner--wrap">
         <!-- 轮播图 -->
-        <el-col :xs="24" :sm="12">
+        <el-col :xs="22" :sm="12">
           <el-carousel height="300px" arrow="always">
             <el-carousel-item v-for="(item, index) in 3" :key="index">
             </el-carousel-item>
           </el-carousel>
         </el-col>
-        <el-col :xs="4" :sm="6" class="hidden-sm-and-down">
+        <el-col :xs="22" :sm="6">
           <div>
             <img src="../assets/home/文章.png" alt="">
             <p>长院要闻</p>
@@ -23,7 +24,7 @@
           <div>
             <img src="../assets/home/专题.png" alt="">
             <p>发布期刊</p>
-            <p>{{v3}} 篇</p>
+            <p>24 篇</p>
           </div>
           <div>
             <img src="../assets/home/通知.png" alt="">
@@ -31,7 +32,7 @@
             <p>{{v4}} 篇</p>
           </div>
         </el-col>
-        <el-col :xs="4" :sm="6" class="hidden-sm-and-down">
+        <el-col :xs="22" :sm="6">
           <h3><img src="../assets/home/热门.png">热门文章</h3>
           <p v-for="(item, index) in artHot" :key="index" @click="showContent(item.id)">
             <i>{{index+1}}</i>
@@ -41,17 +42,19 @@
         </el-col>
       </el-row>
     </div>
+    <!-- 页面中部通知 -->
     <div class="home__notice">
       <span>最新通知</span>
       <span>免费可商用！收好这个可自定义颜色的矢量插画图库</span>
     </div>
+    <!-- 页面下部最新文章 -->
     <main class="home__all">
       <el-row :gutter="80">
         <el-col :xs="8" :sm="4" class="hidden-sm-and-down">
           <p class="myLinks">友情链接</p>
           <home-link v-for="(item, index) in linkData" :key="index" :linkData="item"></home-link>
         </el-col>
-        <el-col :xs="24" :sm="20">
+        <el-col :xs="20" :sm="20">
            <h2>最新文章</h2>
            <article-module class="article-module" v-for="(item, index) in artNew" :key="index" :datas="item"></article-module>
         </el-col>
@@ -63,7 +66,6 @@
 
 <script>
   import ArticleModule from '@/components/ArticleModule';
-  import SpecialReport from '@/components/SpecialReport';
   import HomeLink from '@/components/HomeLink';
   export default {
     data() {
@@ -75,7 +77,7 @@
              ],
           v1:0,       //长院要闻
           v2:0,       //综合新闻篇数
-          v3:0,       //专题报道篇数
+          v3:24,       //发布期刊篇数
           v4:0,       //通知报告篇数
           artHot:[    //热门文章
             {'id':1,'title':'我们学校正在扩招研究剩风刀霜剑了','likes':999},
@@ -99,9 +101,8 @@
       }
     },
     components: {
-      ArticleModule,
-      SpecialReport,
-      HomeLink
+      ArticleModule,     //最新文章
+      HomeLink           //链接
     },
     created() {
        let loading = this.$loading({
@@ -121,13 +122,6 @@
                   'content-type': 'application/x-www-form-urlencoded'
                 },
           }).then(function(res){
-              // that.$notify({
-              //   title: '成功',
-              //   message: '数据加载成功',
-              //   type: 'success',
-              //   showClose: false
-              // });
-              // console.log(res.data);
               that.v1 = res.data[0]['count(1)']
               that.v2 = res.data[1]['count(1)']
               that.v3 = res.data[2]['count(1)']
@@ -202,6 +196,7 @@
           grid-template-rows: repeat(2, 1fr);
           grid-gap: 20px;
 
+          // 具体的块元素
           div {
             text-align: center;
             display: flex;
@@ -223,11 +218,10 @@
               color: gray;
               line-height: 0.3em;
             }
-          }
-
-          div:hover {
-            box-shadow: 1px 1px 10px #d4d2d2;
-            cursor: pointer;
+            &:hover{
+              box-shadow: 1px 1px 10px #d4d2d2;
+              cursor: pointer;
+            }
           }
         }
 
@@ -351,11 +345,50 @@
                 width:40%;
             }
         }
-        .el-col:nth-of-type(3){
-           .special-report{
-               width:auto;
-           }
-        }
     }
+  }
+
+  @media screen and (max-width: 760px){
+       .home{
+         width:100vw;
+         overflow:hidden;
+         .home__banner{
+           width:100vw;
+           .home__banner--wrap{
+             flex-direction: column;
+             justify-content:center;
+             align-items: center;
+             &>div{
+               margin:20px 0 0;
+             }
+             &>.el-col:nth-of-type(3){
+               background:white;
+               h3{
+                 text-align: center;
+               }
+               p{
+                 text-align: center;
+               }
+             }
+           }
+         }
+         .home__all{  
+           width:100vw;
+           overflow: hidden;
+           .el-row{
+             .el-col:nth-of-type(2){
+              width:90vw !important;
+              margin-left:15vw;
+              .article-module{
+                width:80%;
+             }
+           }
+           }  
+           
+         }
+         .home__notice{
+           width:100vw;
+         }
+       }
   }
 </style>

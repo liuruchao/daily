@@ -17,7 +17,7 @@
           <img src="./assets/user_l.png" alt="" v-else class="nav-pc__user__head" @click="isLanding">
           <div class="nav-pc__user__login--unhaslogin" v-show="haslogin">
             <!-- <div>{{sno}}<i class="el-icon-success" style="color:#409EFF;margin-left:1em"></i></div> -->
-            <div>个人中心</div>
+            <div @click="showUserCenter">个人中心</div>
             <div @click="logout">登出</div>
           </div>
           <el-dialog title="您未登陆" type="border-card" :visible.sync="dialogVisible" width="300px"
@@ -38,6 +38,10 @@
           </el-dialog>
         </div>
       </el-menu>
+      <aside class="userCenter" :class='isShow' @click='closeCenter'>
+           <h3>收藏文章</h3>
+           <p v-for="(item, index) in collect" :key="index" @click.stop='showContent(item.postId)'>{{index+1}}.{{item.title}}</p>
+      </aside>
     </nav>
     <!-- <nav class="nav-mobile">
       <img src="" alt="" class="nav-mobile__logo">
@@ -66,7 +70,10 @@
         logLoad: false,
         landLoad: false,
         sno:'',
-        meidenglu:true
+        meidenglu:true,
+        isShow:'',
+        status:'',
+        collect:[]
       }
     },
     methods:{
@@ -214,14 +221,54 @@
               center: true
             });
           this.meidenglu = true;
-      } 
+      },
+      showUserCenter(){
+         const that = this;
+         this.isShow = this.status.next().value;
+         const formFile = new FormData();
+         formFile.append('uid',sessionStorage.uid);
+         this.axios({
+              method:'POST',
+              url:'http://127.0.0.1:5000/userCenter',
+              headers: {
+                  'content-type': 'application/x-www-form-urlencoded'
+                },
+              data:formFile
+          }).then(function(res){
+             console.log(res.data)
+             that.collect = res.data;
+          })
+      },
+      // 是否显示个人中心状态机
+      * isShowCent (){
+          while(1){
+             yield 'show';
+             yield 'noshow';
+          }
+      },
+      closeCenter(){
+         this.isShow = this.status.next().value;
+      },
+      showContent(post_id){
+          let id = post_id;
+          // this.$route.params.post_id = id;
+          // console.log(this.$router.params.post_id);
+          // this.$router.push({
+          //     // path: `/show/${id}`
+          //     name: 'ArticlePost',
+          //     params:{
+          //        id
+          //     }
+          // })
+      }
     },
     created(){
-       let uid = sessionStorage.uid;
+        let uid = sessionStorage.uid;
         const that = this;
         if(uid){      //已登陆
             that.meidenglu=false;
         }
+        this.status = this.isShowCent();
     }
   }
 
@@ -278,6 +325,7 @@
           border-bottom: 1px solid#f1ebeb;
           background: white;
           z-index: 10;
+          cursor: pointer;
         }
 
         &>div:hover {
@@ -312,6 +360,41 @@
       }
 
     }
+  }
+  .userCenter{
+    width:300px;
+    height:100vh;
+    background: rgb(223, 222, 222);
+    position: fixed;
+    transform:translateX(100%);
+    transition:all 0.3s linear;
+    top:0;
+    right:0;
+    z-index: 999;
+    padding:0 1.5em 1.5em;
+    h3{
+      text-align: center;
+      border-bottom:1px solid gray;
+      padding-bottom:1em;
+    }
+    p{
+      text-overflow:ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+      &:hover{
+        color:orange;
+      }
+      cursor:pointer;
+    }
+  }
+  // 展开个人中心
+  .show{
+    transform:translateX(0);
+    transition:all 0.3s linear;
+  }
+  .noshow{
+    transform:translateX(100%);
+    transition:all 0.3s linear;
   }
   footer{
      height:100px;

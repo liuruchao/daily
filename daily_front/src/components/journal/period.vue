@@ -19,7 +19,7 @@
       </div>
     </div>
 
-    <el-dialog  :visible.sync="dialogVisible" width="60%" :before-close="handleClose" class="dialog">
+    <el-dialog  :visible.sync="dialogVisible"  width='65%' :before-close="handleClose" class="dialog">
       <div><h3 style="text-align:center;">{{poster['title']}}</h3></div>
       <div><span class="dialog__field">作者：</span><span>{{poster['author']}}</span></div>
       <div><span class="dialog__field">关键字：</span><span>{{poster['keyword']}}</span></div>
@@ -90,7 +90,6 @@
           },
           data: form
         }).then(function (res) {
-          console.log(res.data);
           that.poster = res.data[0];
           that.dialogVisible = true;
         }).finally(function () {
@@ -110,7 +109,6 @@
           'content-type': 'application/x-www-form-urlencoded'
         },
       }).then(function (res) {
-        console.log(res.data)
         const qikanSet = new Set();
         const qikanshuSet = new Set();
         res.data.forEach((val) => {

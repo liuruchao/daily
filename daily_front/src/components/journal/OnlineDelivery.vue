@@ -30,7 +30,7 @@
       <div class="row">
         <span>投稿文件：</span>
         <input type="file" id='file' @change="upload"
-          accept=".doc,.pdf,.docx,.xml,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+          accept=".pdf">
       </div>
       <el-button type="primary" style="width:100px;" @click="submit">提交</el-button>
     </div>
@@ -152,6 +152,19 @@
 
     h2 {
       text-align: center;
+    }  
+  }
+
+  @media screen and (max-width:760px){
+    .delivery{
+      
+      .delivery__content{
+        width:80%;
+        box-sizing: border-box;
+        .elInput{
+          width:66%;
+        }
+      }
     }
   }
 

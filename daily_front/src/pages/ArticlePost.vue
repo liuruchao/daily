@@ -45,6 +45,7 @@ export default {
           const formFile = new FormData();
           formFile.append('id', that.id);
           formFile.append('uid',sessionStorage.uid);
+          formFile.append('title',that.data.title)
           this.axios({
               method:'POST',
               url:url,

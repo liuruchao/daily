@@ -2,7 +2,6 @@
   <div class="article-list">
     <h2>长院要闻</h2>
     <h3>—— 已发布文章{{count}}篇 ——</h3>
-    <img src="" alt="">
     <section class="article-list--show" v-loading="loading">
       <article-show v-for="(item, index) in articles" :key="index" class="show-item" :datas="item"></article-show>
     </section>
@@ -33,7 +32,7 @@
        this.init();
     },
     components: {
-      ArticleShow
+      ArticleShow       
     },
     methods:{
       init() {

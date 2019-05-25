@@ -44,7 +44,7 @@ export default new Router({
     {
       path: '/show/:post_id',
       name: 'ArticlePost',
-      component: ArticlePost
+      component: ArticlePost,
     },
     {
       path: '/journal',

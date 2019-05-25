@@ -1,4 +1,3 @@
-<!-- 后台专题 -->
 <template>
   <div class='show-article'>
     <el-table :data="tableData" border style="width: 100%" height="700px">
@@ -52,7 +51,7 @@
       handleEdit(index, row) {
         console.log(index, row);
         this.dialogVisible = true;
-        document.querySelector('#artContent').innerHTML = row['content']
+        document.querySelector('#artContent').innerHTML = row['content'];
       },
       handleDelete(index, row) {
         const id = row['id'];
@@ -95,25 +94,6 @@
             done();
           })
           .catch(_ => {});
-      },
-      insertReport() {
-        const that = this;
-        that.load = true;
-        this.axios({
-          method: 'POST',
-          url: 'http://127.0.0.1:5000/report/insert',
-          data: {
-            title: that.reportTitle,
-            subhead: that.reportDec
-          }
-        }).then(function (res) {
-          that.dialogVisible = false;
-          let time = res.data[0]['time'] + '+0800'; //中国时间
-          res.data[0]['time'] = (new Date(time)).toLocaleDateString() + " " + (new Date(time)).toLocaleTimeString()
-          that.tableData.unshift(res.data[0]);
-        }).finally(function () {
-          that.load = false;
-        })
       },
       //初始化表格数据
       initTable() {

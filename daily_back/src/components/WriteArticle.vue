@@ -138,22 +138,6 @@
           that.loading = false;
         })
       },
-      initReport() {
-        const that = this;
-        this.axios({
-          method: 'POST',
-          url: 'http://127.0.0.1:5000/report/select',
-          data: {}
-        }).then(function (res) {
-          res.data.forEach((val, index) => {
-            let child = {
-              value: val['title'],
-              label: val['title']
-            }
-            that.options[3]['children'].push(child)
-          });
-        })
-      },
       upload() {
         const that = this;
         let input = document.querySelector('#file');

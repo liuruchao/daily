@@ -24,6 +24,8 @@
         <span slot="title">热度排行榜</span>
       </el-menu-item>
     </el-menu>
+
+    <el-button type="primary" class="exit" @click="exit">登出</el-button>
     </nav>
     <router-view class="router-view"/>
   </div>
@@ -31,7 +33,20 @@
 
 <script>
   export default {
-    name: 'App'
+    name: 'App',
+    data(){
+      return {
+          
+      }
+      
+    },
+    methods:{
+      exit(){
+         this.$router.replace({
+                        path: '/login',
+                    })
+      }
+    }
   }
 
 </script>
@@ -60,5 +75,9 @@
     flex-grow: 1;
      float:right;
      width:80vw;
+  }
+  .exit{
+    margin-left:2em;
+    margin-top:5em;
   }
 </style>

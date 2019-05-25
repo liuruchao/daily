@@ -2,11 +2,11 @@ import Vue from 'vue'
 import Router from 'vue-router'
 // import HelloWorld from '@/components/HelloWorld'
 import WriteArticle from '@/components/WriteArticle'
-import BackReport from '@/pages/BackReport'
 import ShowArticle from '@/pages/ShowArticle'
 import TopArticle from '@/pages/TopArticle'
 import NoAudit from '@/pages/NoAudit'
 import HasAudit from '@/pages/HasAudit'
+import Login from '@/pages/login'
 
 Vue.use(Router)
 
@@ -17,11 +17,11 @@ export default new Router({
       name: 'WriteArticle',
       component: WriteArticle
     },
-    // {
-    //   path: '/report',
-    //   name :'BackReport',
-    //   component: BackReport
-    // },
+    {
+      path:'/login',
+      name: 'Login',
+      component: Login
+    },
     {
       path: '/article-list',
       name: 'ShowArticle',
